@@ -113,6 +113,12 @@ window.onload = () => {
   resumeBtn.disabled = true;
 };
 
+// === UPDATED beforeunload handler with auto-pause logic ===
 window.addEventListener('beforeunload', () => {
+  if (logging && !paused) {
+    paused = true;
+    pauseStart = new Date();
+    appendLog(`=== Auto-paused on shutdown at ${pauseStart.toLocaleTimeString()} ===`);
+  }
   saveLog();
 });
